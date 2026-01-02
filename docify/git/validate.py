@@ -7,34 +7,46 @@ def require_git() -> None:
     if code != 0:
         raise Exception("Git is required but was not found in PATH.")
 
-
 def normalize_github_url(url: str) -> str:
-    """
-    Accepts:
-      - https://github.com/owner/repo
-      - https://github.com/owner/repo.git
-      - git@github.com:owner/repo
-      - git@github.com:owner/repo.git
-    Returns a cloneable HTTPS URL ending in .git
-    """
-    url = url.strip()
+        """
+        Accepts:
+          - https://github.com/owner/repo
+          - https://github.com/owner/repo.git
+          - git@github.com:owner/repo
+          - git@github.com:owner/repo.git
+          - github.com/owner/repo
+          - owner/repo
 
-    # Convert SSH to HTTPS
-    m = re.match(r"git@github\.com:(.+?)(\.git)?$", url)
-    if m:
-        url = f"https://github.com/{m.group(1)}.git"
+        Returns a cloneable HTTPS URL ending in .git
+        """
+        url = url.strip()
 
-    if "github.com/" not in url:
-        raise Exception("Invalid URL. Use: https://github.com/<owner>/<repo>")
+        # owner/repo shorthand
+        if re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", url):
+            url = f"https://github.com/{url}"
 
-    parts = url.split("github.com/")[-1].strip("/").split("/")
-    if len(parts) < 2 or not parts[0] or not parts[1]:
-        raise Exception("Invalid GitHub repository URL. Use: https://github.com/<owner>/<repo>")
+        # github.com/owner/repo (no scheme)
+        if url.startswith("github.com/"):
+            url = "https://" + url
 
-    if not url.endswith(".git"):
-        url = url.rstrip("/") + ".git"
+        # SSH → HTTPS
+        m = re.match(r"git@github\.com:(.+?)(\.git)?$", url)
+        if m:
+            url = f"https://github.com/{m.group(1)}"
 
-    return url
+        # Basic validation
+        if "github.com/" not in url:
+            raise Exception("Invalid URL. Use: https://github.com/<owner>/<repo>")
+
+        parts = url.split("github.com/")[-1].strip("/").split("/")
+        if len(parts) < 2 or not parts[0] or not parts[1]:
+            raise Exception("Invalid GitHub repository URL. Use: https://github.com/<owner>/<repo>")
+
+        # Ensure .git suffix
+        if not url.endswith(".git"):
+            url = url.rstrip("/") + ".git"
+
+        return url
 
 
 def _friendly_git_error(msg: str) -> str:
