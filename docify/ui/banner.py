@@ -25,11 +25,12 @@ def _center_lines(text: str, width: int) -> str:
 
 def print_banner() -> None:
     term_width = shutil.get_terminal_size((80, 20)).columns
+    banner_width = min(term_width, 100)
     greeting = random.choice(GREETINGS)
 
     print()
-    print(_center_lines(BANNER, min(term_width, 120)))
+    print(_center_lines(BANNER, banner_width))
     print()
-    print(greeting.center(min(term_width, 120)))
-    print(("-" * min(term_width, 120)))
+    print(greeting.center(banner_width))
+    print(("-" * banner_width))
     print()
