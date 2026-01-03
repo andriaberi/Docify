@@ -2,7 +2,6 @@ import subprocess
 from pathlib import Path
 from typing import List, Optional, Tuple
 
-
 def run(cmd: List[str], cwd: Optional[Path] = None, env: Optional[dict] = None,) -> Tuple[int, str, str]:
     p = subprocess.Popen(
         cmd,

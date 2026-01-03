@@ -1,7 +1,6 @@
 import re
 from docify.git.shell import run
 
-
 def require_git() -> None:
     code, _, _ = run(["git", "--version"])
     if code != 0:
@@ -48,8 +47,19 @@ def normalize_github_url(url: str) -> str:
 
         return url
 
+def check_repo_access(url: str) -> None:
+    """
+    Checks repo exists + you have access (public OR private with your credentials).
+    Uses `git ls-remote` (lightweight, no clone).
+    """
+    code, out, err = run(["git", "ls-remote", url])
+    if code == 0:
+        return
 
-def _friendly_git_error(msg: str) -> str:
+    msg = (err or out).strip() or "Unknown git error"
+    raise Exception(friendly_git_error(msg))
+
+def friendly_git_error(msg: str) -> str:
     msg = msg.strip()
     if "Repository not found" in msg:
         return "Repository not found or access denied."
@@ -62,16 +72,3 @@ def _friendly_git_error(msg: str) -> str:
     if "fatal:" in msg:
         return msg.replace("fatal:", "", 1).strip()
     return msg or "Unknown git error."
-
-
-def check_repo_access(url: str) -> None:
-    """
-    Checks repo exists + you have access (public OR private with your credentials).
-    Uses `git ls-remote` (lightweight, no clone).
-    """
-    code, out, err = run(["git", "ls-remote", url])
-    if code == 0:
-        return
-
-    msg = (err or out).strip() or "Unknown git error"
-    raise Exception(_friendly_git_error(msg))

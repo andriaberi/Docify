@@ -1,7 +1,6 @@
 from docify.git.validate import normalize_github_url, check_repo_access
 from docify.error import handle_error
 
-
 def prompt_for_accessible_repo(prompt: str = "> ") -> str:
     """
     Prompts until the user provides a GitHub repository URL that:

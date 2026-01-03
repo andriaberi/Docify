@@ -3,12 +3,12 @@ import random
 import shutil
 
 BANNER = r"""
- ██████╗  ██████╗  ██████╗██╗███████╗██╗   ██╗
- ██╔══██╗██╔═══██╗██╔════╝██║██╔════╝╚██╗ ██╔╝
- ██║  ██║██║   ██║██║     ██║█████╗   ╚████╔╝ 
- ██║  ██║██║   ██║██║     ██║██╔══╝    ╚██╔╝  
- ██████╔╝╚██████╔╝╚██████╗██║██║        ██║   
- ╚═════╝  ╚═════╝  ╚═════╝╚═╝╚═╝        ╚═╝   
+██████╗  ██████╗  ██████╗██╗███████╗██╗   ██╗
+██╔══██╗██╔═══██╗██╔════╝██║██╔════╝╚██╗ ██╔╝
+██║  ██║██║   ██║██║     ██║█████╗   ╚████╔╝ 
+██║  ██║██║   ██║██║     ██║██╔══╝    ╚██╔╝  
+██████╔╝╚██████╔╝╚██████╗██║██║        ██║   
+╚═════╝  ╚═════╝  ╚═════╝╚═╝╚═╝        ╚═╝   
 """.strip("\n")
 
 GREETINGS = [
@@ -20,7 +20,7 @@ GREETINGS = [
 def clear() -> None:
     os.system("cls" if os.name == "nt" else "clear")
 
-def _center_lines(text: str, width: int) -> str:
+def center_lines(text: str, width: int) -> str:
     return "\n".join(line.center(width) for line in text.splitlines())
 
 def print_banner() -> None:
@@ -29,7 +29,7 @@ def print_banner() -> None:
     greeting = random.choice(GREETINGS)
 
     print()
-    print(_center_lines(BANNER, banner_width))
+    print(center_lines(BANNER, banner_width))
     print()
     print(greeting.center(banner_width))
     print(("-" * banner_width))
