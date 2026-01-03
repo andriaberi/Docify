@@ -49,6 +49,11 @@ LANGUAGE_MAP = {
     "SQL": [".sql"],
 }
 
+SUPPORTED_LANGUAGES = [
+    "Python",
+    "JavaScript"
+]
+
 __all__ = [
     "DEFAULT_IGNORES",
     "LANGUAGE_MAP"

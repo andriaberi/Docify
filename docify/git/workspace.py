@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .shell import run
 
+
 def repo_parts_from_url(url: str) -> tuple[str, str]:
     """
     URL is guaranteed normalized:

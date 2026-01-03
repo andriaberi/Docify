@@ -1,5 +1,6 @@
-from docify.git import *
 from docify.error.handler import handle
+from docify.git import *
+
 
 def prompt_for_accessible_repo(prompt: str = "> ") -> str:
     """

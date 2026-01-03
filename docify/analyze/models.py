@@ -4,6 +4,7 @@ from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any
 
+
 @dataclass(frozen=True)
 class RepoTree:
     text: str

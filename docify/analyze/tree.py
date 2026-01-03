@@ -1,7 +1,10 @@
 from __future__ import annotations
+
 from pathlib import Path
-from .models import RepoTree
+
 from docify.constants import DEFAULT_IGNORES
+from .models import RepoTree
+
 
 def build_tree(root: Path, max_depth: int = 1000, max_entries_per_dir: int = 1000, ignores: set[str] | None = None) -> RepoTree:
     """

@@ -1,5 +1,7 @@
 import re
+
 from .shell import run
+
 
 def require_git() -> None:
     code, _, _ = run(["git", "--version"])

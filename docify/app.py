@@ -1,10 +1,11 @@
 from pathlib import Path
 
-from docify.cli import *
-from docify.git import require_git, clone_repo, cleanup
-from docify.error import handle
 from docify.analyze import *
+from docify.cli import *
+from docify.error import handle
+from docify.git import require_git, clone_repo, cleanup
 from docify.output import *
+
 
 def run(work_dir: Path, results_dir: Path) -> None:
     print_banner()

@@ -1,6 +1,7 @@
 import json
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+
 
 def write_results(results_dir: Path, analysis, owner: str, repo: str) -> Path:
     """
